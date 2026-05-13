@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632432076709",
+    "project_id": "kaizen-tfg",
+    "storage_bucket": "kaizen-tfg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632432076709:android:40f1768e6fbe01cbceaa4c",
+        "android_client_info": {
+          "package_name": "com.example.kaizen_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-73XgMgC3sg3wak1Cs4p08IypINVvLxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
