@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "632432076709",
-    "project_id": "kaizen-tfg",
-    "storage_bucket": "kaizen-tfg.firebasestorage.app"
+    "project_number": "147626890199",
+    "project_id": "kaizen-tfg-real",
+    "storage_bucket": "kaizen-tfg-real.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:632432076709:android:40f1768e6fbe01cbceaa4c",
+        "mobilesdk_app_id": "1:147626890199:android:e8fc5f50360e72df0d3192",
         "android_client_info": {
           "package_name": "com.example.kaizen_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "147626890199-hc15iuaqta4263614nhkpres4pdrqdue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kaizen_app",
+            "certificate_hash": "9d7f7d5641cefc7ba38d62294493d919081fc11c"
+          }
+        },
+        {
+          "client_id": "147626890199-kajrhu9mapmblf0l04b8qc75moe0f2cg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyC-73XgMgC3sg3wak1Cs4p08IypINVvLxU"
+          "current_key": "AIzaSyC3JAPggj5iQCKkAQFSgmM6ieZX_FXRRSM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147626890199-kajrhu9mapmblf0l04b8qc75moe0f2cg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

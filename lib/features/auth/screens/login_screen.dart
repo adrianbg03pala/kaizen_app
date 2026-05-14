@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +11,41 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
+  String? _errorMessage;
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final user = await AuthService.signInWithGoogle();
+      if (user != null && mounted) {
+        // Login exitoso - navegar a HomeScreen
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('¡Bienvenido, ${user.displayName}!')),
+        );
+        context.go('/');
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _errorMessage = 'Error: ${e.toString()}';
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_errorMessage!),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 else
                   ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() => _isLoading = true);
-                      // TODO: Agregar Google Sign-In aquí
-                      Future.delayed(const Duration(seconds: 1), () {
-                        if (mounted) {
-                          setState(() => _isLoading = false);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Login en desarrollo')),
-                          );
-                        }
-                      });
-                    },
+                    onPressed: _handleGoogleSignIn,
                     icon: const Icon(Icons.login),
                     label: const Text('Iniciar con Google'),
                     style: ElevatedButton.styleFrom(
