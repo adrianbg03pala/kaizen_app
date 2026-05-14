@@ -43,3 +43,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase credentials and secrets
+*firebase-key.json
+*adminsdk*.json
+kaizen-tfg-real-21f46994f7b5.json
+firebase_options.dart
+.env
+.env.local
