@@ -1,79 +1,141 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/providers/exercises_provider.dart';
+import '../../../core/theme/app_theme.dart';
 
-class TrainingScreen extends StatefulWidget {
+class TrainingScreen extends ConsumerWidget {
   const TrainingScreen({super.key});
 
   @override
-  State<TrainingScreen> createState() => _TrainingScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedType = ref.watch(selectedTrainingTypeProvider);
+    final selectedPlan = ref.watch(selectedPlanProvider);
 
-class _TrainingScreenState extends State<TrainingScreen> {
-  final List<Map<String, dynamic>> _workouts = [
-    {'exercise': 'Flexiones', 'series': 3, 'reps': 12, 'weight': '-', 'completed': false},
-    {'exercise': 'Sentadillas', 'series': 4, 'reps': 15, 'weight': '20kg', 'completed': false},
-    {'exercise': 'Dominadas', 'series': 3, 'reps': 8, 'weight': '-', 'completed': false},
-  ];
+    if (selectedType == null || selectedPlan == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Entrenamiento')),
+        body: Center(
+          child: Text('Selecciona un tipo de entrenamiento primero'),
+        ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
+    // Seleccionar provider de ejercicios
+    final exercisesProvider = switch (selectedType) {
+      'general' => exercisesGeneralProvider,
+      'running' => exercisesRunningProvider,
+      'musculacion' => exercisesMusculacionProvider,
+      _ => exercisesGeneralProvider,
+    };
+
+    final exercisesAsync = ref.watch(exercisesProvider);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Entrenamientos')),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: _workouts.length,
-        itemBuilder: (context, index) {
-          final workout = _workouts[index];
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(workout['exercise'] as String, style: Theme.of(context).textTheme.titleMedium),
-                      Checkbox(
-                        value: workout['completed'] as bool,
-                        onChanged: (value) {
-                          setState(() => _workouts[index]['completed'] = value ?? false);
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildStat(context, 'Series', '${workout['series']}'),
-                      _buildStat(context, 'Reps', '${workout['reps']}'),
-                      _buildStat(context, 'Peso', workout['weight'] as String),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+      appBar: AppBar(
+        title: Text(selectedPlan.name),
+        backgroundColor: AppTheme.darkGrey,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
+      body: Container(
+        color: AppTheme.darkBg,
+        child: exercisesAsync.when(
+          loading: () => const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
+            ),
+          ),
+          error: (err, stack) => Center(
+            child: Text('Error: $err'),
+          ),
+          data: (exercises) {
+            if (exercises.isEmpty) {
+              return const Center(
+                child: Text('No hay ejercicios disponibles'),
+              );
+            }
+
+            return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: exercises.length,
+              itemBuilder: (context, index) {
+                final exercise = exercises[index];
+                return _buildExerciseCard(context, exercise);
+              },
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildStat(BuildContext context, String label, String value) {
-    return Column(
-      children: [
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
-        const SizedBox(height: 4),
-        Text(value,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                )),
-      ],
+  Widget _buildExerciseCard(BuildContext context, Exercise exercise) {
+    return Card(
+      color: AppTheme.darkGrey,
+      margin: const EdgeInsets.only(bottom: 16),
+      child: ExpansionTile(
+        title: Text(
+          exercise.name,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: AppTheme.primaryColor,
+              ),
+        ),
+        subtitle: Text(
+          exercise.description,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppTheme.textSecondary,
+              ),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildInfoRow('Dificultad:', '${exercise.difficulty}/10'),
+                _buildInfoRow('Series:', '${exercise.defaultSets}'),
+                _buildInfoRow('Repeticiones:', '${exercise.defaultReps}'),
+                _buildInfoRow('Duración:', '${exercise.durationMinutes} min'),
+                _buildInfoRow('Equipamiento:', exercise.equipment),
+                const SizedBox(height: 16),
+                Text(
+                  'Instrucciones:',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: AppTheme.primaryColor,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                ...exercise.instructions.asMap().entries.map((entry) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      '${entry.key + 1}. ${entry.value}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  );
+                }).toList(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label),
+          Text(
+            value,
+            style: const TextStyle(
+              color: AppTheme.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

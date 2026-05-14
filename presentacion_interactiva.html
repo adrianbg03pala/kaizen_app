@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIZEN TFG - Presentación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+            position: relative;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide h1 {
+            font-size: 56px;
+            color: #00FF41;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .slide h2 {
+            font-size: 40px;
+            color: #00FF41;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #00FF41;
+            padding-bottom: 20px;
+        }
+
+        .slide p, .slide li {
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .slide ul {
+            margin-left: 40px;
+        }
+
+        .slide li {
+            margin-bottom: 12px;
+        }
+
+        .slide-cover {
+            text-align: center;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-cover h1 {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .slide-cover p {
+            font-size: 24px;
+            color: #9A9A9A;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        button {
+            background: #00FF41;
+            color: #0A0A0A;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #00DD33;
+            transform: scale(1.05);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            font-size: 18px;
+            color: #00FF41;
+        }
+
+        .architecture-box {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid #00FF41;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tech-item {
+            background: rgba(26, 26, 26, 0.8);
+            border-left: 4px solid #00FF41;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .tech-item h3 {
+            color: #00FF41;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .tech-item p {
+            font-size: 14px;
+            color: #9A9A9A;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            padding: 20px;
+            margin: 15px 0;
+            background: rgba(26, 26, 26, 0.8);
+            border-left: 4px solid #00FF41;
+            border-radius: 4px;
+        }
+
+        .timeline-item h3 {
+            color: #00FF41;
+            margin-bottom: 8px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #00FF41;
+            color: #0A0A0A;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .keyboard-hint {
+            position: fixed;
+            bottom: 10px;
+            left: 20px;
+            font-size: 12px;
+            color: #9A9A9A;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- SLIDE 1: Portada -->
+        <div class="slide active slide-cover">
+            <h1>KAIZEN</h1>
+            <p>Tu viaje de mejora continua</p>
+            <p style="margin-top: 40px; font-size: 18px; color: #00FF41;">Trabajo de Fin de Grado</p>
+            <p style="font-size: 16px; color: #9A9A9A;">Flutter + Firebase</p>
+        </div>
+
+        <!-- SLIDE 2: Visión General -->
+        <div class="slide">
+            <h2>Visión General</h2>
+            <ul>
+                <li>📱 <strong>Aplicación móvil Flutter</strong> para mejora continua</li>
+                <li>🔐 <strong>Autenticación segura</strong> con Google Sign-In</li>
+                <li>☁️ <strong>Backend: Firebase + Cloud Firestore</strong></li>
+                <li>📊 <strong>Gestión de mejora</strong> personal y empresarial</li>
+                <li>🎯 <strong>Features principales:</strong> SmartPantry, Training, Progress Tracking</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 3: Arquitectura -->
+        <div class="slide">
+            <h2>Arquitectura del Sistema</h2>
+            <div class="architecture-box">
+FLUTTER APP              FIREBASE              FIRESTORE
+┌─────────────┐         ┌──────────┐         ┌────────────┐
+│  Frontend   │────────→│ Auth +   │────────→│ Users Data │
+│  (Mobile)   │         │ Services │         │ Collections│
+└─────────────┘         └──────────┘         └────────────┘
+       ↓
+  Google Sign-In
+            </div>
+            <p style="margin-top: 20px;">Arquitectura cliente-servidor con sincronización en tiempo real</p>
+        </div>
+
+        <!-- SLIDE 4: Tecnologías -->
+        <div class="slide">
+            <h2>Stack Tecnológico</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h3>Frontend</h3>
+                    <p>• Flutter 3.35.7<br>• Riverpod (State Management)<br>• GoRouter (Navigation)<br>• Material Design 3</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Backend</h3>
+                    <p>• Firebase Core<br>• Firebase Auth<br>• Google Sign-In<br>• Cloud Firestore</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Desarrollo</h3>
+                    <p>• Dart<br>• GitHub (Control versión)<br>• Android Studio<br>• Google Cloud Console</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Otros</h3>
+                    <p>• Firebase Analytics<br>• Google Fonts<br>• Connectivity Plus<br>• Linters & Builders</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Flujo de Autenticación -->
+        <div class="slide">
+            <h2>Flujo de Autenticación</h2>
+            <ul>
+                <li><strong>①</strong> Usuario abre app → ve LoginScreen</li>
+                <li><strong>②</strong> Toca "Iniciar con Google" → Google Sign-In</li>
+                <li><strong>③</strong> Selecciona cuenta de Google</li>
+                <li><strong>④</strong> Firebase Auth verifica credenciales</li>
+                <li><strong>⑤</strong> Datos guardados en Firestore</li>
+                <li><strong>⑥</strong> Navega a HomeScreen con acceso a features</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 6: Firebase Setup -->
+        <div class="slide">
+            <h2>Configuración Firebase</h2>
+            <ul>
+                <li>✅ Proyecto: <strong>kaizen-tfg-real</strong></li>
+                <li>✅ Authentication: <strong>Google Sign-In</strong> habilitado</li>
+                <li>✅ Firestore Database: Creada en <strong>europe-west1</strong></li>
+                <li>✅ Security Rules: <strong>Configuradas</strong> (usuarios leen/escriben sus datos)</li>
+                <li>✅ Android: <strong>google-services.json</strong> registrado</li>
+                <li>✅ Estado: <span class="status-badge">EN FUNCIONAMIENTO ✨</span></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 7: Estructura Proyecto -->
+        <div class="slide">
+            <h2>Estructura del Proyecto</h2>
+            <div class="architecture-box">
+lib/
+├── main.dart
+├── features/
+│   ├── auth/screens/login_screen.dart
+│   └── home/screens/home_screen.dart
+├── core/
+│   ├── services/auth_service.dart
+│   └── theme/app_theme.dart
+├── firebase_options.dart
+└── pubspec.yaml
+            </div>
+            <p style="margin-top: 20px; font-size: 14px; color: #9A9A9A;">Estructura modular con separación de responsabilidades</p>
+        </div>
+
+        <!-- SLIDE 8: Features Planeadas -->
+        <div class="slide">
+            <h2>Features Planeadas</h2>
+            <ul>
+                <li><strong>🛒 SmartPantry</strong> - Gestión inteligente de inventario</li>
+                <li><strong>📚 Training</strong> - Módulo de aprendizaje y mejora</li>
+                <li><strong>📈 Progress Tracking</strong> - Seguimiento de progreso personal</li>
+                <li><strong>📊 Dashboard</strong> - Visualización de estadísticas</li>
+                <li><strong>🎯 Goal Setting</strong> - Establecer y rastrear objetivos</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 9: Timeline -->
+        <div class="slide">
+            <h2>Timeline de Desarrollo</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Fase 1 - Mayo 2026 <span class="status-badge">✓ HECHO</span></h3>
+                    <p>Setup Firebase, Autenticación, HomeScreen</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Fase 2 - Junio 2026</h3>
+                    <p>SmartPantry, Schema de Base de Datos</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Fase 3 - Julio 2026</h3>
+                    <p>Training Module, Progress Tracking</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Fase 4 - Agosto 2026</h3>
+                    <p>Dashboard, Testing, Deployment</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Próximos Pasos -->
+        <div class="slide">
+            <h2>Próximos Pasos Inmediatos</h2>
+            <ul>
+                <li><strong>1️⃣ SmartPantry</strong> - Implementar gestión de inventario</li>
+                <li><strong>2️⃣ UI/UX Design</strong> - Diseño para nuevas pantallas</li>
+                <li><strong>3️⃣ Schema Firestore</strong> - Definir estructura de datos</li>
+                <li><strong>4️⃣ Testing</strong> - Pruebas exhaustivas</li>
+                <li><strong>5️⃣ Feedback Iterativo</strong> - Revisión continua con tutora</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">10</span>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">← Anterior</button>
+        <button onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <div class="keyboard-hint">
+        Usa flechas ← → o A/D para navegar
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            document.getElementById('current-slide').textContent = n + 1;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') prevSlide();
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>

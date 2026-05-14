@@ -1,0 +1,75 @@
+@startuml Arquitectura
+
+title KAIZEN - DEV, QA, PRO
+
+[Samsung Flutter] as dev_app
+[Firebase Dev] as dev_firebase
+database "Firestore Dev" as dev_db
+
+dev_app --> dev_firebase
+dev_firebase --> dev_db
+
+note right of dev_app
+  DEV
+  Tu Movil
+end note
+
+---
+
+[Dispositivo QA] as qa_app
+[Firebase QA] as qa_firebase
+database "Firestore QA" as qa_db
+
+qa_app --> qa_firebase
+qa_firebase --> qa_db
+
+note right of qa_app
+  QA
+  Testing
+end note
+
+---
+
+[Google Play] as pro_app
+[Firebase Pro] as pro_firebase
+database "Firestore Pro" as pro_db
+
+pro_app --> pro_firebase
+pro_firebase --> pro_db
+
+note right of pro_app
+  PRO
+  Usuarios
+end note
+
+@enduml
+
+---
+
+@startuml Login
+
+title Flujo de Login
+
+actor Usuario
+participant App
+participant Google
+participant Firebase
+database Firestore
+
+Usuario -> App: Abre App
+App -> App: LoginScreen
+Usuario -> App: Iniciar Google
+
+App -> Google: Sign-In
+Google -> Usuario: Elige cuenta
+Google --> App: Token
+
+App -> Firebase: Autentica
+Firebase -> Firestore: Guarda usuario
+Firestore --> Firebase: OK
+Firebase --> App: Creado
+
+App -> App: HomeScreen
+App -> Usuario: Bienvenido
+
+@enduml
